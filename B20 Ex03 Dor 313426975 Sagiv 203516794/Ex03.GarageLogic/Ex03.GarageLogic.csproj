@@ -35,13 +35,18 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Battery.cs" />
     <Compile Include="Car.cs" />
-    <Compile Include="ElectricVehicle.cs" />
-    <Compile Include="Motocycle.cs" />
-    <Compile Include="OnFuelVehicle.cs" />
+    <Compile Include="VehicleManufactur.cs" />
+    <Compile Include="ChargingVehicleDetails.cs" />
+    <Compile Include="EnergySource.cs" />
+    <Compile Include="Fuel.cs" />
+    <Compile Include="Motorcycle.cs" />
     <Compile Include="Truck.cs" />
+    <Compile Include="ValueOutOfRangeException.cs" />
     <Compile Include="VehicleRegistrationForm.cs" />
-    <Compile Include="Vehicles.cs" />
+    <Compile Include="Vehicle.cs" />
+    <Compile Include="Wheel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

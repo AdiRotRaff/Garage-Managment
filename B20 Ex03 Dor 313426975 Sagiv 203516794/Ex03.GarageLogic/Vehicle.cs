@@ -101,7 +101,7 @@ namespace Ex03.GarageLogic
 Model : {1}
 Wheel: {2}
 Precentage Of Remaining Energy: {3}
-Energy Source: {4}", r_LicenceNumber, r_ModelName, r_CollectionOfWheels[0].ToString(), m_PrecentageOfRemainingEnergy, m_EnergySource.ToString());
+Energy Source: {4}", r_LicenceNumber, r_ModelName, r_CollectionOfWheels[0].ToString(), m_PrecentageOfRemainingEnergy, EnergySource.ToString());
 
             return vehicleDetails;
         }

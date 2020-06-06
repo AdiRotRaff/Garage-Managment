@@ -10,7 +10,7 @@ namespace Ex03.GarageLogic
         private static readonly int sr_MaxLEngthPhoneNumber = 10;
         private static readonly int sr_MinLEngthPhoneNumber = 9;
 
-        private enum eStatusOfFix
+        public enum eStatusOfFix
         {
             InProgress,
             Fixed,
@@ -18,15 +18,15 @@ namespace Ex03.GarageLogic
         }
 
         private readonly string  r_OwnerName;
+        private readonly Vehicle m_Vehicle;
         private string  m_PhoneNumber;
         private eStatusOfFix     m_Status;
-        private Vehicle         m_Vehicle;
 
         public VehicleRegistrationForm(Vehicle i_NewVehcile, string i_OwnerName, string i_OwnerPhone)
         {
             r_OwnerName = i_OwnerName;
             PhoneNumber = i_OwnerPhone;
-            Vehicle = i_NewVehcile;
+            m_Vehicle = i_NewVehcile;
             Status = eStatusOfFix.InProgress;
         }
 
@@ -46,16 +46,15 @@ namespace Ex03.GarageLogic
             }
         }
 
-        private eStatusOfFix Status
+        public eStatusOfFix Status
         {
             get { return m_Status; }
             set { m_Status = value; }
         }
 
-        private Vehicle Vehicle
+        public Vehicle Vehicle
         {
             get { return m_Vehicle; }
-            set { m_Vehicle = value; }
         }
 
         private void  isValidPhoneNumber(string i_PhoneNumber)
@@ -64,7 +63,7 @@ namespace Ex03.GarageLogic
             long.Parse(i_PhoneNumber);
             if (i_PhoneNumber.Length > sr_MaxLEngthPhoneNumber || i_PhoneNumber.Length < sr_MinLEngthPhoneNumber)
             {
-                throw new ValueOutOfRangeException(sr_MinLEngthPhoneNumber, sr_MaxLEngthPhoneNumber));
+                throw new ValueOutOfRangeException(sr_MinLEngthPhoneNumber, sr_MaxLEngthPhoneNumber);
             }
         }
 
@@ -109,6 +108,24 @@ namespace Ex03.GarageLogic
         {
             return m_PhoneNumber.GetHashCode();
         }
-    }
 
+        public override string ToString()
+        {
+            StringBuilder allDetailsOfVehicleAndOwner = new StringBuilder();
+
+            string treatmentDetails = String.Format(@"Owner name: {0}
+Phone Number: {1}
+Status Of Fix: {2}", OwnerName, PhoneNumber, Status);
+
+            allDetailsOfVehicleAndOwner.Append(treatmentDetails);
+            allDetailsOfVehicleAndOwner.Append(Vehicle.ToString());
+
+            return allDetailsOfVehicleAndOwner.ToString();
+        }
+
+        public void ChangeStatusOfFixToInProgress()
+        {
+            Status = eStatusOfFix.InProgress;
+        }
+    }
 }

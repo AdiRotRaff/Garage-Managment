@@ -37,6 +37,7 @@
   <ItemGroup>
     <Compile Include="Battery.cs" />
     <Compile Include="Car.cs" />
+    <Compile Include="GarageManagment.cs" />
     <Compile Include="VehicleManufactur.cs" />
     <Compile Include="ChargingVehicleDetails.cs" />
     <Compile Include="EnergySource.cs" />

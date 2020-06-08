@@ -17,8 +17,7 @@
         public Wheel(string i_ManufactorName, float i_MaxAirPressure)
         {
             this.r_ManufactorName = i_ManufactorName;
-            this.m_MaxAirPressure = i_MaxAirPressure;
-            // check
+            this.m_MaxAirPressure = i_MaxAirPressure; 
             this.m_CurrAirPressure = 0;
         }
 

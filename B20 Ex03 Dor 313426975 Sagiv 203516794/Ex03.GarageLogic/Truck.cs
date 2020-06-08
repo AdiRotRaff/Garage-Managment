@@ -5,9 +5,9 @@ using System.Text;
 namespace Ex03.GarageLogic
 {
     // think how to support electric Truck on the future
-    class Truck : Vehicle
+    public class Truck : Vehicle
     {
-        private static readonly float sr_TruckMaxAirPressure = float.Parse(eMaxAirPressure.Truck.ToString());
+        private static readonly float sr_TruckMaxAirPressure = (float)eMaxAirPressure.Truck;
         private static readonly int sr_TruckAmountOfWheels = 16;
         private static readonly float sr_TruckMaxGasTank = 120;
         private static readonly Fuel.eFuelType sr_TruckFuelType = Fuel.eFuelType.Soler;

@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Ex03.GarageLogic
 {
-    class Car : Vehicle
+    public class Car : Vehicle
     {
-        private static readonly float sr_CarMaxAirPressure = float.Parse(eMaxAirPressure.Car.ToString());
+        private static readonly float sr_CarMaxAirPressure = (float)eMaxAirPressure.Car;
         private static readonly int sr_CarAmountOfWheels = 4;
         private static readonly float sr_CarMaxBatteryTime = 2.1f;
         private static readonly float sr_CarMaxGasTank = 60;

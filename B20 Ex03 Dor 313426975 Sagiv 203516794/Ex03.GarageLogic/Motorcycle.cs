@@ -6,7 +6,7 @@ namespace Ex03.GarageLogic
 {
     public class Motorcycle : Vehicle
     {
-        private static readonly float sr_MotorcycleWheelMaxAirPressure = float.Parse(eMaxAirPressure.Motorcycle.ToString());
+        private static readonly float sr_MotorcycleWheelMaxAirPressure = (float)eMaxAirPressure.Motorcycle;
         private static readonly int sr_MotorcycleAmountOfWheels = 2;
         private static readonly float sr_MotorcycleMaxBatteryTime = 1.2f;
         private static readonly float sr_MotorcycleMaxGasTank = 7;

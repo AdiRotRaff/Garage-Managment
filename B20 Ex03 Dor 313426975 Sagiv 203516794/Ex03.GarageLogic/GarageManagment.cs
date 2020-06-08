@@ -8,9 +8,14 @@ namespace Ex03.GarageLogic
         // key is LicenceNumber and data is VehicleRegistrationForm
         private readonly Dictionary<string, VehicleRegistrationForm> r_DictionaryOfAllPatient = new Dictionary<string, VehicleRegistrationForm>();
 
-        public void EnterVehicleToGarage(Vehicle i_NewVehicle, VehicleRegistrationForm i_RegistrationForm)
+        public Dictionary<string, VehicleRegistrationForm> DictionaryOfAllPatient
         {
-            if (r_DictionaryOfAllPatient.ContainsKey(i_NewVehicle.LicenceNumber) == true)
+            get { return r_DictionaryOfAllPatient; }
+        }
+
+        public void EnterVehicleToGarage(VehicleRegistrationForm i_RegistrationForm)
+        {
+            if (r_DictionaryOfAllPatient.ContainsKey(i_RegistrationForm.Vehicle.LicenceNumber) == true)
             {
                 throw new ArgumentException("You Vehicle is in the garage already so i will update his status of fix to In Progress");
                 // remember to catch in case and
@@ -39,26 +44,51 @@ namespace Ex03.GarageLogic
         {
             foreach (Wheel wheel in r_DictionaryOfAllPatient[i_LicenceNumber].Vehicle.CollectionOfWheels)
             {
-                wheel.BlowTheWheel(wheel.MaxAirPressure);
+                wheel.BlowTheWheel(wheel.MaxAirPressure - wheel.CurrAirPressure);
             }
         }
 
-        public void FillEnergySource(ChargingVehicleDetails i_ChargingVehicleDetails)
+        public void ChargeEnergySource(ChargingVehicleDetails i_ChargingVehicleDetails)
         {
             try
             {
-                r_DictionaryOfAllPatient[i_ChargingVehicleDetails.LicenceNumber].Vehicle.EnergySource
-                    .ChargeEnergySource(i_ChargingVehicleDetails);
+                r_DictionaryOfAllPatient[i_ChargingVehicleDetails.LicenceNumber].Vehicle.EnergySource.ChargeEnergySource(i_ChargingVehicleDetails);
+                r_DictionaryOfAllPatient[i_ChargingVehicleDetails.LicenceNumber].Vehicle.UpdateEnergyPercent();
             }
             catch(ValueOutOfRangeException)
             {
-                Console.WriteLine("Overflows the Contents of your Enery tank so tank was filled till max content reached");
-                i_ChargingVehicleDetails.QuantityOfEnergyToAdd =
-                    r_DictionaryOfAllPatient[i_ChargingVehicleDetails.LicenceNumber].Vehicle.EnergySource
-                        .MaxOfEnergyCanContain - r_DictionaryOfAllPatient[i_ChargingVehicleDetails.LicenceNumber]
-                        .Vehicle.EnergySource.QuantityOfEnergyLeft;
-                r_DictionaryOfAllPatient[i_ChargingVehicleDetails.LicenceNumber].Vehicle.EnergySource
-                    .ChargeEnergySource(i_ChargingVehicleDetails);
+                float fixedQuantityToAdd;
+                if (r_DictionaryOfAllPatient[i_ChargingVehicleDetails.LicenceNumber].Vehicle.EnergySource
+                    .QuantityOfEnergyLeft + i_ChargingVehicleDetails.QuantityOfEnergyToAdd > 0)
+                {
+                    fixedQuantityToAdd =
+                        r_DictionaryOfAllPatient[i_ChargingVehicleDetails.LicenceNumber].Vehicle.EnergySource
+                            .MaxOfEnergyCanContain - r_DictionaryOfAllPatient[i_ChargingVehicleDetails.LicenceNumber]
+                            .Vehicle.EnergySource.QuantityOfEnergyLeft;
+                }
+                else
+                {
+                    fixedQuantityToAdd = r_DictionaryOfAllPatient[i_ChargingVehicleDetails.LicenceNumber].Vehicle
+                        .EnergySource.QuantityOfEnergyLeft * -1;
+                }
+
+                ChargingVehicleDetails fixedForm = new ChargingVehicleDetails(
+                    i_ChargingVehicleDetails.LicenceNumber, fixedQuantityToAdd,
+                    i_ChargingVehicleDetails.TypeOfEnergySource, i_ChargingVehicleDetails.FuelType);
+                r_DictionaryOfAllPatient[i_ChargingVehicleDetails.LicenceNumber].Vehicle.EnergySource.ChargeEnergySource(i_ChargingVehicleDetails);
+
+                throw new Exception("Overflows/Underflow the Contents of your Enery tank so tank was filled till max(in case of Overflows)/min (in case ofUnderflow) content reached");
+            }
+        }
+
+        public void IsVehicleExists(string input)
+        {
+            if (r_DictionaryOfAllPatient.ContainsKey(input) == false)
+            {
+                throw new ArgumentException(
+                    string.Format(
+                        "the vehicle with the license plate {0} doesnt exists in the garage",
+                        input));
             }
         }
     }

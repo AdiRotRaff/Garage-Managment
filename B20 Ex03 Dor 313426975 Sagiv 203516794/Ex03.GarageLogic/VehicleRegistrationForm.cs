@@ -12,7 +12,7 @@ namespace Ex03.GarageLogic
 
         public enum eStatusOfFix
         {
-            InProgress,
+            InProgress = 0,
             Fixed,
             Paid
         }
@@ -22,10 +22,9 @@ namespace Ex03.GarageLogic
         private string  m_PhoneNumber;
         private eStatusOfFix     m_Status;
 
-        public VehicleRegistrationForm(Vehicle i_NewVehcile, string i_OwnerName, string i_OwnerPhone)
+        public VehicleRegistrationForm(Vehicle i_NewVehcile, string i_OwnerName)
         {
             r_OwnerName = i_OwnerName;
-            PhoneNumber = i_OwnerPhone;
             m_Vehicle = i_NewVehcile;
             Status = eStatusOfFix.InProgress;
         }
@@ -121,6 +120,14 @@ Status Of Fix: {2}", OwnerName, PhoneNumber, Status);
             allDetailsOfVehicleAndOwner.Append(Vehicle.ToString());
 
             return allDetailsOfVehicleAndOwner.ToString();
+        }
+
+        public void CheckEqualStatus(eStatusOfFix userChoice)
+        {
+            if (userChoice == m_Status)
+            {
+                throw new ArgumentException(string.Format("The vehicle is already in {0} status", m_Status));
+            }
         }
 
         public void ChangeStatusOfFixToInProgress()

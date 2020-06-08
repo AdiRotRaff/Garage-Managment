@@ -5,16 +5,23 @@ namespace Ex03.GarageLogic
     public struct ChargingVehicleDetails
     {
         private readonly string r_LicenceNumber;
-        private float m_QuantityOfEnergyToAdd;
+        private readonly float m_QuantityOfEnergyToAdd;
         private readonly EnergySource.eTypeOfEnergySource r_TypeOfEnergySource;
         private readonly Nullable<Fuel.eFuelType> r_FuelType;
 
-        public ChargingVehicleDetails(string i_LicenceNumber, string i_QuantityOfEnergyToAdd, string i_TypeOfEnergySource, string i_FuelType)
+        public ChargingVehicleDetails(string i_LicenceNumber, float i_QuantityOfEnergyToAdd, EnergySource.eTypeOfEnergySource i_TypeOfEnergySource, Nullable<Fuel.eFuelType> i_FuelType)
         {
             // catch argument exception in case
-            r_FuelType = DecodeFuelTypeFromUserIfExist(i_FuelType);
-            m_QuantityOfEnergyToAdd = DecodeQuantityOfEnergyToAdd(i_QuantityOfEnergyToAdd);
-            r_TypeOfEnergySource = DecodeTypeOfEnergySource(i_TypeOfEnergySource);
+            if (i_FuelType.HasValue == true)
+            {
+                r_FuelType = i_FuelType;
+            }
+            else
+            {
+                r_FuelType = null;
+            }
+            m_QuantityOfEnergyToAdd = i_QuantityOfEnergyToAdd;
+            r_TypeOfEnergySource = i_TypeOfEnergySource;
             r_LicenceNumber = i_LicenceNumber;
 
         }
@@ -22,7 +29,7 @@ namespace Ex03.GarageLogic
         public float QuantityOfEnergyToAdd
         {
             get { return m_QuantityOfEnergyToAdd; }
-            set { m_QuantityOfEnergyToAdd = value; }
+            //set { m_QuantityOfEnergyToAdd = value; }
         }
 
         public EnergySource.eTypeOfEnergySource TypeOfEnergySource
@@ -43,6 +50,7 @@ namespace Ex03.GarageLogic
             //set { m_FuelType = value; }
         }
 
+        /*
         private static Fuel.eFuelType? DecodeFuelTypeFromUserIfExist(string i_FuelType)
         {
             Fuel.eFuelType? fuelType;
@@ -112,5 +120,6 @@ namespace Ex03.GarageLogic
 
             return typeOfEnergySource;
         }
+        */
     }
 }

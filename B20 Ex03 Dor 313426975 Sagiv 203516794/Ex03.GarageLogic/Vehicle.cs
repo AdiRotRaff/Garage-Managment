@@ -5,7 +5,6 @@ namespace Ex03.GarageLogic
 {
     public abstract class Vehicle
     {
-
         private readonly string r_ModelName;
         private readonly string r_LicenceNumber;
         private float m_PrecentageOfRemainingEnergy;

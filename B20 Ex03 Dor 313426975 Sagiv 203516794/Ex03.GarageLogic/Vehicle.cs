@@ -96,7 +96,8 @@ namespace Ex03.GarageLogic
 
         public string VehicleDetails()
         {
-            string vehicleDetails = String.Format(@"Licence Number: {0}
+            string vehicleDetails = String.Format(@"
+Licence Number: {0}
 Model : {1}
 Wheel: {2}
 Precentage Of Remaining Energy: {3}
@@ -111,6 +112,8 @@ Energy Source: {4}", r_LicenceNumber, r_ModelName, r_CollectionOfWheels[0].ToStr
         }
 
         public abstract void SetEnergySource();
+
+        public abstract void FillRestDetails(object i_DatailsOne, object i_DetailsTwo);
 
         public abstract override string ToString();
     }

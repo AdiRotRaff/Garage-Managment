@@ -59,5 +59,11 @@ namespace Ex03.GarageLogic
 Truck's Cargo Volume: {1}
 Truck Contain Hazard Material: {2}", VehicleDetails(), m_CargoVolume, v_ContainHazerMaterial);
         }
+
+        public override void FillRestDetails(object i_DatailsOne, object i_DetailsTwo)
+        {
+            v_ContainHazerMaterial = (bool) i_DatailsOne;
+            m_CargoVolume = (float) i_DetailsTwo;
+        }
     }
 }

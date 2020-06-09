@@ -31,6 +31,7 @@ namespace B20_Ex03_Dor_313426975_Sagiv_203516794
         {
             int userChoice;
 
+
             printSign(string.Format("{0}", i_MsgInSign));
             userChoice = printEnumOptionsAndGetEnumChoiceFromUser(typeof(T));
 
@@ -77,6 +78,7 @@ namespace B20_Ex03_Dor_313426975_Sagiv_203516794
                 }
 
                 result.Append(io_EnumName[i]);
+                previous = io_EnumName[i];
             }
 
             return result.ToString();
@@ -95,6 +97,11 @@ namespace B20_Ex03_Dor_313426975_Sagiv_203516794
                     UserBabyInput = Console.ReadLine();
                     numberEnteredByUser = int.Parse(UserBabyInput);
                     v_validInput = Enum.IsDefined(i_EnumType, numberEnteredByUser);
+
+                    if (v_validInput == false)
+                    {
+                        Console.WriteLine("This Number Haven't Defined Yet");
+                    }
                 }
                 catch(FormatException)
                 {
@@ -116,7 +123,6 @@ namespace B20_Ex03_Dor_313426975_Sagiv_203516794
         public string GetStringWIthoutConditionFromUser(string i_DetailToGet)
         {
             string userInput;
-            bool v_ValidInput;
 
             Console.Write(String.Format("Please Enter Your {0}: ", i_DetailToGet));
 
@@ -124,9 +130,8 @@ namespace B20_Ex03_Dor_313426975_Sagiv_203516794
             {
                 userInput = Console.ReadLine();
                 Console.Write(Environment.NewLine);
-                v_ValidInput = userInput != null && userInput != " ";
             }
-            while (v_ValidInput == false);
+            while (string.IsNullOrEmpty(userInput));
 
             return userInput;
         }
@@ -150,30 +155,33 @@ namespace B20_Ex03_Dor_313426975_Sagiv_203516794
             return userFloatChoice;
         }
 
-        public void PrintLicensePlatesWithStatusFilterIfNeeded(int i_UserChoice, Dictionary<string, VehicleRegistrationForm> i_TreatmentList, bool i_DisplayAll)
+        public void PrintLicensePlatesWithStatusFilterIfNeeded(VehicleRegistrationForm.eStatusOfFix i_UserChoice, Dictionary<string, VehicleRegistrationForm> i_TreatmentList, bool i_DisplayAll)
         {
-            VehicleRegistrationForm.eStatusOfFix wantedStatus = (VehicleRegistrationForm.eStatusOfFix)i_UserChoice;
-
             foreach (VehicleRegistrationForm current in i_TreatmentList.Values)
             {
-                if (current.Status == wantedStatus || i_DisplayAll)
+                if (current.Status == i_UserChoice || i_DisplayAll)
                 {
                     Console.WriteLine(current.Vehicle.LicenceNumber);
                 }
             }
         }
-
-        public void GetVehicleLicenseNumber(GarageManagment i_Garage, out string i_LicensePlate)
+        public string GetVehicleLicenseNumberCheckForExisiting(GarageManagment i_Garage)
         {
-            do
-            {
-                Console.WriteLine("Insert vehicle license Number");
-                i_LicensePlate = Console.ReadLine();
-            }
-            while (string.IsNullOrEmpty(i_LicensePlate));
-            i_Garage.IsVehicleExists(i_LicensePlate);
-        }
+            string licenseNumber;
 
+            licenseNumber = GetStringWIthoutConditionFromUser("license Number");
+
+            try
+            {
+                i_Garage.IsVehicleExists(licenseNumber);
+            }
+            catch (ArgumentException ae)
+            {
+                Console.WriteLine(ae.Message);
+            }
+
+            return licenseNumber;
+        }
         public ChargingVehicleDetails fillChargingVehicleForm(GarageManagment io_Garage)
         {
             string licenseNumber;
@@ -181,20 +189,22 @@ namespace B20_Ex03_Dor_313426975_Sagiv_203516794
             EnergySource.eTypeOfEnergySource typeOfEnergyChoice = new EnergySource.eTypeOfEnergySource();
             Fuel.eFuelType? typeOfFuelChoice = new Fuel.eFuelType();
 
-            GetVehicleLicenseNumber(io_Garage, out licenseNumber);
+            printSign("filling Charging Form");
+
+            licenseNumber = GetVehicleLicenseNumberCheckForExisiting(io_Garage);
             quantityToAdd = getFloatWithoutAnyCondition("Quantity To Add");
             typeOfEnergyChoice = (EnergySource.eTypeOfEnergySource)PrintAllEnumValuesGetUserChoice(typeOfEnergyChoice, "Fuel Type Choosing"); ;
 
             if (typeOfEnergyChoice == EnergySource.eTypeOfEnergySource.Fuel)
             {
-                typeOfFuelChoice = (Fuel.eFuelType)PrintAllEnumValuesGetUserChoice(typeOfFuelChoice, "Fuel Type Choosing");
+                typeOfFuelChoice = (Fuel.eFuelType)PrintAllEnumValuesGetUserChoice(typeOfFuelChoice.Value,"Fuel Type Choosing");
             }
             else
             {
                 typeOfFuelChoice = null;
             }
 
-            return new ChargingVehicleDetails(licenseNumber, quantityToAdd, typeOfEnergyChoice, typeOfFuelChoice.Value);
+            return new ChargingVehicleDetails(licenseNumber, quantityToAdd, typeOfEnergyChoice, typeOfFuelChoice);
         }
 
         private void printSign(string i_Title)
@@ -219,12 +229,17 @@ namespace B20_Ex03_Dor_313426975_Sagiv_203516794
 
         public void PrintInvalidErrorWithSpecificError(string i_ErrorMsg)
         {
-            Console.WriteLine(String.Format("Invalid Input Of Choice Try Again ({})", i_ErrorMsg));
+            Console.WriteLine(String.Format("Invalid Input Of Choice Try Again ({0})", i_ErrorMsg));
         }
 
         public void PrintNatural(string i_Msg)
         {
             Console.WriteLine(i_Msg);
+        }
+
+        public void ClearConsole()
+        {
+            Console.Clear();
         }
     }
 }

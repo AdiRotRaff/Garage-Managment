@@ -17,7 +17,8 @@ namespace Ex03.GarageLogic
         {
             if (r_DictionaryOfAllPatient.ContainsKey(i_RegistrationForm.Vehicle.LicenceNumber) == true)
             {
-                throw new ArgumentException("You Vehicle is in the garage already so i will update his status of fix to In Progress");
+                //throw new ArgumentException("You Vehicle is in the garage already so i will update his status of fix to In Progress");
+                throw new ArgumentException("Key Exist Already (Something Went Wrong)");
                 // remember to catch in case and
                 //m_DictionaryOfAllpatient[i_NewVehicle].ChangeStatusOfFixToInProgress();
             }
@@ -55,7 +56,7 @@ namespace Ex03.GarageLogic
                 r_DictionaryOfAllPatient[i_ChargingVehicleDetails.LicenceNumber].Vehicle.EnergySource.ChargeEnergySource(i_ChargingVehicleDetails);
                 r_DictionaryOfAllPatient[i_ChargingVehicleDetails.LicenceNumber].Vehicle.UpdateEnergyPercent();
             }
-            catch(ValueOutOfRangeException)
+            catch(ValueOutOfRangeException valueOutOfRangeException)
             {
                 float fixedQuantityToAdd;
                 if (r_DictionaryOfAllPatient[i_ChargingVehicleDetails.LicenceNumber].Vehicle.EnergySource
@@ -77,19 +78,24 @@ namespace Ex03.GarageLogic
                     i_ChargingVehicleDetails.TypeOfEnergySource, i_ChargingVehicleDetails.FuelType);
                 r_DictionaryOfAllPatient[i_ChargingVehicleDetails.LicenceNumber].Vehicle.EnergySource.ChargeEnergySource(i_ChargingVehicleDetails);
 
-                throw new Exception("Overflows/Underflow the Contents of your Enery tank so tank was filled till max(in case of Overflows)/min (in case ofUnderflow) content reached");
+                throw valueOutOfRangeException;
             }
         }
 
-        public void IsVehicleExists(string input)
+        public void IsVehicleExists(string i_licenseNumber)
         {
-            if (r_DictionaryOfAllPatient.ContainsKey(input) == false)
+            if (r_DictionaryOfAllPatient.ContainsKey(i_licenseNumber) == true)
             {
                 throw new ArgumentException(
                     string.Format(
-                        "the vehicle with the license plate {0} doesnt exists in the garage",
-                        input));
+                        "the vehicle with the license plate {0} exists in the garage",
+                        i_licenseNumber));
             }
+        }
+
+        public void ChangeStatus(string i_LicensePlate, VehicleRegistrationForm.eStatusOfFix i_NewStatus)
+        {
+            r_DictionaryOfAllPatient[i_LicensePlate].Status = i_NewStatus;
         }
     }
 }

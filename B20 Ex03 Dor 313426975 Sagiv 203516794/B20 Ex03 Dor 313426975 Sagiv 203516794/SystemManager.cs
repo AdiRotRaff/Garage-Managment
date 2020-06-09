@@ -23,7 +23,7 @@ namespace B20_Ex03_Dor_313426975_Sagiv_203516794
         public void OpenGarage()
         {
             UI.eUserChoice choice = new UI.eUserChoice();
-            bool v_closeGarage = true;
+            bool v_closeGarage = false;
 
             Ui.PrintSignToUser(string.Format("Welcome to Brian O'Conner and Turto's garage"));
 
@@ -31,12 +31,12 @@ namespace B20_Ex03_Dor_313426975_Sagiv_203516794
             {
                 try
                 {
-                    choice = (UI.eUserChoice) m_Ui.PrintAllEnumValuesGetUserChoice(choice,"Menu");
+                    choice = (UI.eUserChoice) m_Ui.PrintAllEnumValuesGetUserChoice(choice, "Menu");
+                    m_Ui.ClearConsole();
 
                     if (choice == UI.eUserChoice.InsertNewCar)
                     {
-                        VehicleRegistrationForm currRegistrationForm = fillVehicleRegistrationForm();
-                        Garage.EnterVehicleToGarage(currRegistrationForm);
+                        insertNewCar();
                     }
                     else if (choice == UI.eUserChoice.DisplayDriverLicenceNumberWithFilterByStatusOfFix)
                     {
@@ -48,11 +48,11 @@ namespace B20_Ex03_Dor_313426975_Sagiv_203516794
                     }
                     else if (choice == UI.eUserChoice.BlowWheelsToMaximum)
                     {
-                        BlowWheelsToMax();
+                        blowWheelsToMax();
                     }
                     else if (choice == UI.eUserChoice.ChargeVehicle)
                     {
-                        ChargeVehicle();
+                        chargeVehicle();
                     }
                     else if (choice == UI.eUserChoice.DisplayFullDetailsOfVehicleByLicenceNumber)
                     {
@@ -73,10 +73,33 @@ namespace B20_Ex03_Dor_313426975_Sagiv_203516794
                 }
                 catch (FormatException)
                 {
-                    m_Ui.PrintInvalidErrorWithSpecificError("You Need To Chose A Integer Number");
+                    m_Ui.PrintInvalidErrorWithSpecificError("You need to choose an integer");
                 }
-
             } while (v_closeGarage == false);
+        }
+
+        private void insertNewCar()
+        {
+            VehicleRegistrationForm currRegistrationForm = null;
+            bool v_VehicleExist;
+
+            try
+            {
+                v_VehicleExist = false;
+                currRegistrationForm = fillVehicleRegistrationForm();
+            }
+            catch (ArgumentException ae)
+            {
+                v_VehicleExist = true;
+                // existing license number exist
+                m_Ui.PrintNatural(ae.Message);
+            }
+
+            if (v_VehicleExist == false)
+            {
+                Garage.EnterVehicleToGarage(currRegistrationForm);
+                m_Ui.PrintNatural("Car Was Inserted");
+            }
         }
 
         private VehicleRegistrationForm fillVehicleRegistrationForm()
@@ -85,9 +108,16 @@ namespace B20_Ex03_Dor_313426975_Sagiv_203516794
             Vehicle newVehicle;
             string ClientName;
 
-            m_Ui.PrintSignToUser(string.Format("Filling Vehicle RegistrationForm"));
+            m_Ui.PrintSignToUser(string.Format("Filling Vehicle Registration Form"));
 
-            newVehicle = registNewCar();
+            try
+            {
+                newVehicle = registNewCar(); // throws excweption in case of existing license number
+            }
+            catch (ArgumentException ae)
+            {
+                throw ae;
+            }
 
             m_Ui.PrintSignToUser(String.Format("Contact Information"));
             ClientName = m_Ui.GetStringWIthoutConditionFromUser("Name");
@@ -130,9 +160,21 @@ namespace B20_Ex03_Dor_313426975_Sagiv_203516794
 
             m_Ui.PrintSignToUser("Create Vehicle");
 
-            licenceNumber = m_Ui.GetStringWIthoutConditionFromUser("licence Number");
+            licenceNumber = m_Ui.GetVehicleLicenseNumberCheckForExisiting(Garage);
+
+            try
+            {
+                r_Garage.IsVehicleExists(licenceNumber);
+            }
+            catch(ArgumentException ae)
+            {
+                r_Garage.ChangeStatus(licenceNumber, VehicleRegistrationForm.eStatusOfFix.InProgress);
+                // for good kriot (for those who will see insert new car method)
+                throw new ArgumentException(String.Format("{0} Status Changed To In Progress", licenceNumber));
+            }
+
             modelName = m_Ui.GetStringWIthoutConditionFromUser("Model Name");
-            wheelManufactor = m_Ui.GetStringWIthoutConditionFromUser("Wheel Manufactor Name");
+            wheelManufactor = m_Ui.GetStringWIthoutConditionFromUser("Wheel Manufacture Name");
             registedVehicle = MakeVehicle(licenceNumber, modelName, wheelManufactor);
 
             return registedVehicle;
@@ -174,7 +216,6 @@ namespace B20_Ex03_Dor_313426975_Sagiv_203516794
         {
             VehicleRegistrationForm.eStatusOfFix statusChoice = new VehicleRegistrationForm.eStatusOfFix();
             UI.eDisplayOption displayChoice = new UI.eDisplayOption();
-            int userChoice = 0;
             bool displayAll = false;
 
             displayChoice =
@@ -191,7 +232,7 @@ namespace B20_Ex03_Dor_313426975_Sagiv_203516794
                         "Status Of Fix Choosing");
             }
 
-            m_Ui.PrintLicensePlatesWithStatusFilterIfNeeded(userChoice, r_Garage.DictionaryOfAllPatient, displayAll);
+            m_Ui.PrintLicensePlatesWithStatusFilterIfNeeded(statusChoice, r_Garage.DictionaryOfAllPatient, displayAll);
         }
 
         private void changeStatusOfFix()
@@ -199,12 +240,15 @@ namespace B20_Ex03_Dor_313426975_Sagiv_203516794
             string licenseNumber;
             VehicleRegistrationForm.eStatusOfFix statusToChangeToChoice = new VehicleRegistrationForm.eStatusOfFix();
 
+
             m_Ui.PrintSignToUser("Change Status Of Fix By Licence Number");
+
+
+            licenseNumber = m_Ui.GetVehicleLicenseNumberCheckForExisiting(Garage);
+
             statusToChangeToChoice =
                 (VehicleRegistrationForm.eStatusOfFix) m_Ui.PrintAllEnumValuesGetUserChoice(statusToChangeToChoice,
                     "Status Of Fix Choosing");
-
-            m_Ui.GetVehicleLicenseNumber(r_Garage, out licenseNumber);
 
             try
             {
@@ -216,20 +260,25 @@ namespace B20_Ex03_Dor_313426975_Sagiv_203516794
             }
 
             r_Garage.DictionaryOfAllPatient[licenseNumber].Status = statusToChangeToChoice;
+            m_Ui.PrintNatural("Status Changed");
         }
 
-        private void BlowWheelsToMax()
+        private void blowWheelsToMax()
         {
             string licenseNumber;
 
-            m_Ui.GetVehicleLicenseNumber(r_Garage, out licenseNumber);
+            m_Ui.PrintSignToUser("Blowing Wheels");
+            licenseNumber = m_Ui.GetVehicleLicenseNumberCheckForExisiting(r_Garage);
             r_Garage.BlowToMaximunWheelAirPrresure(licenseNumber);
+            m_Ui.PrintNatural("All Wheels were Blown To Max");
         }
 
-        private void ChargeVehicle()
+        private void chargeVehicle()
         {
             bool v_ChargedVehicle;
             ChargingVehicleDetails chargingForm;
+
+            m_Ui.PrintSignToUser("charging vehicle");
 
             do
             {
@@ -240,25 +289,30 @@ namespace B20_Ex03_Dor_313426975_Sagiv_203516794
                     chargingForm = m_Ui.fillChargingVehicleForm(r_Garage);
                     r_Garage.ChargeEnergySource(chargingForm);
                 }
+                catch (ValueOutOfRangeException rangeException)
+                {
+                    m_Ui.PrintNatural(rangeException.Message);
+                    m_Ui.PrintNatural(
+                        "Overflows/Underflow the Contents of your Energy tank so tank was filled till max(in case of Overflows)/min (in case ofUnderflow) content reached");
+                }
                 catch (ArgumentException ae)
                 {
                     m_Ui.PrintNatural(ae.Message);
                     m_Ui.PrintNatural("Fill Charging Form Again");
                     v_ChargedVehicle = false;
                 }
-                catch (Exception e)
-                {
-                    m_Ui.PrintNatural(e.Message);
-                }
 
             } while (v_ChargedVehicle == false);
+
+            m_Ui.PrintNatural("Vehicle Charged!!");
         }
 
         private void displayFullVehicleDataByLicenseNumber()
         {
             string licenseNumber;
 
-            m_Ui.GetVehicleLicenseNumber(r_Garage, out licenseNumber);
+            m_Ui.PrintSignToUser("Display Full Client Data");
+            licenseNumber = m_Ui.GetVehicleLicenseNumberCheckForExisiting(r_Garage);
             m_Ui.PrintNatural(r_Garage.DictionaryOfAllPatient[licenseNumber].ToString());
         }
     }

@@ -55,6 +55,16 @@
                 m_CurrAirPressure = value;
             }
         }
+        public override string ToString()
+        {
+            string result;
+
+            result = string.Format(
+                @"Air pressure: {0}
+Manufacturer: {1}",this.CurrAirPressure,this.ManufactorName);
+
+            return result;
+        }
     }
 
 }

@@ -27,14 +27,13 @@ namespace Ex03.GarageLogic
         {
             if (i_TypeOfEnergySource != eTypeOfEnergySource.Battery)
             {
-                throw new ArgumentException(String.Format(@"be careful looks like you are trying to charge your battery with fuel"));
+                throw new ArgumentException(string.Format(@"be careful looks like you are trying to charge your battery with fuel"));
             }
         }
 
         public override string ToString()
         {
-            return string.Format(@"Vehicle Battery Left: {0}
-vehicle Capacity Of Battery: {1}", QuantityOfEnergyLeft, MaxOfEnergyCanContain);
+            return string.Format("{2}Vehicle Battery Left: {0}{2}vehicle Capacity Of Battery: {1}{2}", QuantityOfEnergyLeft, MaxOfEnergyCanContain, Environment.NewLine);
         }
     }
 }

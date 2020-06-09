@@ -6,7 +6,7 @@ namespace Ex03.GarageLogic
 {
     public class Car : Vehicle
     {
-        private static readonly float sr_CarMaxAirPressure = (float)eMaxAirPressure.Car;
+        private static readonly float sr_CarMaxAirPressure = (float) eMaxAirPressure.Car;
         private static readonly int sr_CarAmountOfWheels = 4;
         private static readonly float sr_CarMaxBatteryTime = 2.1f;
         private static readonly float sr_CarMaxGasTank = 60;
@@ -31,7 +31,8 @@ namespace Ex03.GarageLogic
         private eDoorsAmount m_DoorsAmount;
         private eCarColor m_Color;
 
-        public Car(string i_LicenceNumber, string i_ModelName, EnergySource.eTypeOfEnergySource i_EnergySourceType, string i_WheelManufactorName)
+        public Car(string i_LicenceNumber, string i_ModelName, EnergySource.eTypeOfEnergySource i_EnergySourceType,
+            string i_WheelManufactorName)
             : base(i_LicenceNumber, i_ModelName, i_EnergySourceType)
         {
             for (int i = 0; i < sr_CarAmountOfWheels; i++)
@@ -41,6 +42,7 @@ namespace Ex03.GarageLogic
 
             SetEnergySource();
         }
+
         public eDoorsAmount DoorsAmount
         {
             get { return m_DoorsAmount; }
@@ -74,5 +76,12 @@ namespace Ex03.GarageLogic
 Car Amount Of Doors: {1}
 Car Color: {2}", VehicleDetails(), m_DoorsAmount, m_Color);
         }
+
+        public override void FillRestDetails(object i_DatailsOne, object i_DetailsTwo)
+        {
+            this.DoorsAmount = (eDoorsAmount)i_DatailsOne;
+            this.Color = (eCarColor)i_DetailsTwo;
+        }
     }
 }
+

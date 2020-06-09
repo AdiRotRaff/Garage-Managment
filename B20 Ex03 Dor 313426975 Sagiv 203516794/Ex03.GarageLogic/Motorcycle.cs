@@ -67,5 +67,11 @@ namespace Ex03.GarageLogic
 Category of licence: {1}
 Engine Capacity: {2}", VehicleDetails(), m_CategoryOfmotocycleLicence, m_EngineCapacity);
         }
+
+        public override void FillRestDetails(object i_DatailsOne, object i_DetailsTwo)
+        {
+            this.CategoryOfmotocycleLicence = (eCategoryOfmotocycleLicence)i_DatailsOne;
+            this.m_EngineCapacity = (int)i_DetailsTwo;
+        }
     }
 }

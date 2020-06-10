@@ -15,9 +15,7 @@ namespace Ex03.GarageLogic
         private bool v_ContainHazerMaterial;
         private float m_CargoVolume;
 
-        public Truck(string i_LicenceNumber, string i_ModelName, EnergySource.eTypeOfEnergySource i_EnergySourceType,
-            string i_WheelManufactorName)
-            : base(i_LicenceNumber, i_ModelName, i_EnergySourceType)
+        public Truck(string i_LicenceNumber, string i_ModelName, EnergySource.eTypeOfEnergySource i_EnergySourceType, string i_WheelManufactorName) : base(i_LicenceNumber, i_ModelName, i_EnergySourceType)
         {
             for (int i = 0; i < sr_TruckAmountOfWheels; i++)
             {
@@ -55,9 +53,7 @@ namespace Ex03.GarageLogic
 
         public override string ToString()
         {
-            return String.Format(@"{0}
-Truck's Cargo Volume: {1}
-Truck Contain Hazard Material: {2}", VehicleDetails(), m_CargoVolume, v_ContainHazerMaterial);
+            return string.Format(@"{0}{3}Truck's Cargo Volume: {1}{3}Truck Contain Hazard Material: {2}", VehicleDetails(), m_CargoVolume, v_ContainHazerMaterial, Environment.NewLine);
         }
 
         public override void FillRestDetails(object i_DatailsOne, object i_DetailsTwo)

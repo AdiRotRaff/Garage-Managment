@@ -17,10 +17,10 @@ namespace Ex03.GarageLogic
             Paid
         }
 
-        private readonly string  r_OwnerName;
+        private readonly string r_OwnerName;
         private readonly Vehicle m_Vehicle;
-        private string  m_PhoneNumber;
-        private eStatusOfFix     m_Status;
+        private string m_PhoneNumber;
+        private eStatusOfFix m_Status;
 
         public VehicleRegistrationForm(Vehicle i_NewVehcile, string i_OwnerName)
         {
@@ -56,10 +56,10 @@ namespace Ex03.GarageLogic
             get { return m_Vehicle; }
         }
 
-        private void  isValidPhoneNumber(string i_PhoneNumber)
+        private void isValidPhoneNumber(string i_PhoneNumber)
         {
-            // catch exception of parse
-            long.Parse(i_PhoneNumber);
+            long.Parse(i_PhoneNumber); // catch exception of parse
+
             if (i_PhoneNumber.Length > sr_MaxLEngthPhoneNumber || i_PhoneNumber.Length < sr_MinLEngthPhoneNumber)
             {
                 throw new ValueOutOfRangeException(sr_MinLEngthPhoneNumber, sr_MaxLEngthPhoneNumber);
@@ -74,7 +74,6 @@ namespace Ex03.GarageLogic
             if (io_obj != null)
             {
                 VehicleRegistrationForm toCompareTo = io_obj as VehicleRegistrationForm;
-
 
                 if (toCompareTo != null)
                 {
@@ -112,9 +111,7 @@ namespace Ex03.GarageLogic
         {
             StringBuilder allDetailsOfVehicleAndOwner = new StringBuilder();
 
-            string treatmentDetails = String.Format(@"Owner name: {0}
-Phone Number: {1}
-Status Of Fix: {2}", OwnerName, PhoneNumber, Status);
+            string treatmentDetails = string.Format(@"Owner name: {0}{3}Phone Number: {1}{3}Status Of Fix: {2}", OwnerName, PhoneNumber, Status, Environment.NewLine);
 
             allDetailsOfVehicleAndOwner.Append(treatmentDetails);
             allDetailsOfVehicleAndOwner.Append(Vehicle.ToString());

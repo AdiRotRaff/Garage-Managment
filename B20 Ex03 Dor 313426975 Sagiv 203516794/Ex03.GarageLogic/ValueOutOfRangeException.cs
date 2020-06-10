@@ -9,8 +9,8 @@ namespace Ex03.GarageLogic
 
         private float MaxValue
         {
-            get { return m_MaxValue;}
-            set { m_MaxValue = value;}
+            get { return m_MaxValue; }
+            set { m_MaxValue = value; }
         }
 
         private float MinValue
@@ -19,11 +19,10 @@ namespace Ex03.GarageLogic
             set { m_MinValue = value; }
         }
 
-        public ValueOutOfRangeException(float i_MinValue, float i_MaxValue) : base( String.Format("ERROR: The Value should be in range from {0} to {1}", i_MinValue, i_MaxValue))
+        public ValueOutOfRangeException(float i_MinValue, float i_MaxValue) : base(string.Format("ERROR: The Value should be in range from {0} to {1}", i_MinValue, i_MaxValue))
         {
             MaxValue = i_MaxValue;
             MinValue = i_MinValue;
         }
-
     }
 }

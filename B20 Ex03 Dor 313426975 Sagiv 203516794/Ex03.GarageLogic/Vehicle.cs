@@ -7,9 +7,26 @@ namespace Ex03.GarageLogic
     {
         private readonly string r_ModelName;
         private readonly string r_LicenceNumber;
-        private float m_PrecentageOfRemainingEnergy;
         private readonly EnergySource r_EnergySource;
         private readonly List<Wheel> r_CollectionOfWheels;
+        private float m_PrecentageOfRemainingEnergy;
+
+        public static bool operator ==(Vehicle lhs, Vehicle rhs)
+        {
+            bool v_EqualsRegistrationForm = false;
+
+            if (lhs.Equals(rhs) == true)
+            {
+                v_EqualsRegistrationForm = true;
+            }
+
+            return v_EqualsRegistrationForm;
+        }
+
+        public static bool operator !=(Vehicle lhs, Vehicle rhs)
+        {
+            return !(lhs == rhs);
+        }
 
         public Vehicle(string i_LicenceNumber, string i_ModelName, EnergySource.eTypeOfEnergySource i_Source)
         {
@@ -71,23 +88,6 @@ namespace Ex03.GarageLogic
             return eqauls;
         }
 
-        public static bool operator ==(Vehicle lhs, Vehicle rhs)
-        {
-            bool v_EqualsRegistrationForm = false;
-
-            if (lhs.Equals(rhs) == true)
-            {
-                v_EqualsRegistrationForm = true;
-            }
-
-            return v_EqualsRegistrationForm;
-        }
-
-        public static bool operator !=(Vehicle lhs, Vehicle rhs)
-        {
-            return !(lhs == rhs);
-        }
-
         // Overriding Object.GetHasCode using r_LicenceNumber as the logic
         public override int GetHashCode()
         {
@@ -96,12 +96,7 @@ namespace Ex03.GarageLogic
 
         public string VehicleDetails()
         {
-            string vehicleDetails = String.Format(@"
-Licence Number: {0}
-Model : {1}
-Wheel: {2}
-Precentage Of Remaining Energy: {3}
-Energy Source: {4}", r_LicenceNumber, r_ModelName, r_CollectionOfWheels[0].ToString(), m_PrecentageOfRemainingEnergy, EnergySource.ToString());
+            string vehicleDetails = string.Format(@"{5}Licence Number: {0}{5}Model : {1}{5}Wheel: {2}{5}Precentage Of Remaining Energy: {3}{5}Energy Source: {4}", r_LicenceNumber, r_ModelName, r_CollectionOfWheels[0].ToString(), m_PrecentageOfRemainingEnergy, EnergySource.ToString(), Environment.NewLine);
 
             return vehicleDetails;
         }

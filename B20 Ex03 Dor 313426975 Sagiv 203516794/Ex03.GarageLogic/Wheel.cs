@@ -1,4 +1,6 @@
-﻿namespace Ex03.GarageLogic
+﻿using System;
+
+namespace Ex03.GarageLogic
 {
     public enum eMaxAirPressure
     {
@@ -9,9 +11,9 @@
 
     public class Wheel
     {
-        private readonly string  r_ManufactorName;
-        private float            m_MaxAirPressure;
-        private float            m_CurrAirPressure ;
+        private readonly string r_ManufactorName;
+        private float m_MaxAirPressure;
+        private float m_CurrAirPressure;
 
         public Wheel(string i_ManufactorName, float i_MaxAirPressure)
         {
@@ -45,26 +47,24 @@
         public float CurrAirPressure
         {
             get { return m_CurrAirPressure; }
-            set {
+            set
+            {
                 if (value > MaxAirPressure || value < 0)
                 {
-                    throw  new ValueOutOfRangeException(0, MaxAirPressure);
+                    throw new ValueOutOfRangeException(0, MaxAirPressure);
                 }
 
                 m_CurrAirPressure = value;
             }
         }
+
         public override string ToString()
         {
             string result;
 
-            result = string.Format(
-                @"
-Air pressure: {0}
-Manufacturer: {1}",this.CurrAirPressure,this.ManufactorName);
+            result = string.Format(@"{2}Air pressure: {0}{2}Manufacturer: {1}", this.CurrAirPressure, this.ManufactorName, Environment.NewLine);
 
             return result;
         }
     }
-
 }

@@ -6,9 +6,6 @@ namespace Ex03.GarageLogic
 {
     public class Fuel : EnergySource
     {
-        // to support in adding other type of car that can be charging fuel
-        //private static List<>;
-        // replace in list of fuel type to avoid problem in including another type of vehicle like traktor and to throw exception in finding type of fuel
         public enum eFuelType
         {
             Octan98 = 0,
@@ -56,7 +53,7 @@ namespace Ex03.GarageLogic
             if (i_FuelType != m_FuelType)
             {
                 // catch exception
-                throw new ArgumentException(String.Format(@"Trying To Fuel your Vehicle With {0} When Your Vehicles Runs on {1}", i_FuelType, m_FuelType));
+                throw new ArgumentException(string.Format(@"Trying To Fuel your Vehicle With {0} When Your Vehicles Runs on {1}", i_FuelType, m_FuelType));
             }
         }
 
@@ -64,15 +61,13 @@ namespace Ex03.GarageLogic
         {
             if (i_TypeOfEnergySource != eTypeOfEnergySource.Fuel)
             {
-                throw new ArgumentException(String.Format(@"be careful looks like you are trying to charge your gas tank with electricity"));
+                throw new ArgumentException(string.Format(@"be careful looks like you are trying to charge your gas tank with electricity"));
             }
         }
+
         public override string ToString()
         {
-            return string.Format(@"
-Vehicle Fuel Left: {0}
-Vehicle Fuel Type: {1}
-vehicle Capacity Of Tank: {2}", QuantityOfEnergyLeft, m_FuelType, MaxOfEnergyCanContain);
+            return string.Format(@"{3}Vehicle Fuel Left: {0}{3}Vehicle Fuel Type: {1}{3}vehicle Capacity Of Tank: {2}{3}", QuantityOfEnergyLeft, m_FuelType, MaxOfEnergyCanContain, Environment.NewLine);
         }
     }
 }

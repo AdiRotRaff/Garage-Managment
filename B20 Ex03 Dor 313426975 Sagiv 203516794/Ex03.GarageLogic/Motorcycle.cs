@@ -63,9 +63,7 @@ namespace Ex03.GarageLogic
 
         public override string ToString()
         {
-            return String.Format(@"{0}
-Category of licence: {1}
-Engine Capacity: {2}", VehicleDetails(), m_CategoryOfmotocycleLicence, m_EngineCapacity);
+            return string.Format(@"{0}{3}Category of licence: {1}{3}Engine Capacity: {2}", VehicleDetails(), m_CategoryOfmotocycleLicence, m_EngineCapacity, Environment.NewLine);
         }
 
         public override void FillRestDetails(object i_DatailsOne, object i_DetailsTwo)

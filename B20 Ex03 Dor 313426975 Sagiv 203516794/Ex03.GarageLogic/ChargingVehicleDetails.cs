@@ -7,9 +7,9 @@ namespace Ex03.GarageLogic
         private readonly string r_LicenceNumber;
         private readonly float r_QuantityOfEnergyToAdd;
         private readonly EnergySource.eTypeOfEnergySource r_TypeOfEnergySource;
-        private readonly Nullable<Fuel.eFuelType> r_FuelType;
+        private readonly Fuel.eFuelType? r_FuelType;
 
-        public ChargingVehicleDetails(string i_LicenceNumber, float i_QuantityOfEnergyToAdd, EnergySource.eTypeOfEnergySource i_TypeOfEnergySource, Nullable<Fuel.eFuelType> i_FuelType)
+        public ChargingVehicleDetails(string i_LicenceNumber, float i_QuantityOfEnergyToAdd, EnergySource.eTypeOfEnergySource i_TypeOfEnergySource, Fuel.eFuelType? i_FuelType)
         {
             // catch argument exception in case
             if (i_FuelType.HasValue == true)
@@ -20,10 +20,10 @@ namespace Ex03.GarageLogic
             {
                 r_FuelType = null;
             }
+
             r_QuantityOfEnergyToAdd = i_QuantityOfEnergyToAdd;
             r_TypeOfEnergySource = i_TypeOfEnergySource;
             r_LicenceNumber = i_LicenceNumber;
-
         }
 
         public float QuantityOfEnergyToAdd
@@ -36,7 +36,7 @@ namespace Ex03.GarageLogic
             get { return r_TypeOfEnergySource; }
         }
 
-        public Nullable<Fuel.eFuelType> FuelType
+        public Fuel.eFuelType? FuelType
         {
             get { return r_FuelType; }
         }

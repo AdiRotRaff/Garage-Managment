@@ -17,10 +17,9 @@ namespace Ex03.GarageLogic
         {
             if (r_DictionaryOfAllPatient.ContainsKey(i_RegistrationForm.Vehicle.LicenceNumber) == true)
             {
-                //throw new ArgumentException("You Vehicle is in the garage already so i will update his status of fix to In Progress");
                 throw new ArgumentException("Key Exist Already (Something Went Wrong)");
-                // remember to catch in case and
-                //m_DictionaryOfAllpatient[i_NewVehicle].ChangeStatusOfFixToInProgress();
+                //// catch in case and
+                ////m_DictionaryOfAllpatient[i_NewVehicle].ChangeStatusOfFixToInProgress();
             }
             else
             {
@@ -73,9 +72,7 @@ namespace Ex03.GarageLogic
                         .EnergySource.QuantityOfEnergyLeft * -1;
                 }
 
-                ChargingVehicleDetails fixedForm = new ChargingVehicleDetails(
-                    i_ChargingVehicleDetails.LicenceNumber, fixedQuantityToAdd,
-                    i_ChargingVehicleDetails.TypeOfEnergySource, i_ChargingVehicleDetails.FuelType);
+                ChargingVehicleDetails fixedForm = new ChargingVehicleDetails(i_ChargingVehicleDetails.LicenceNumber, fixedQuantityToAdd, i_ChargingVehicleDetails.TypeOfEnergySource, i_ChargingVehicleDetails.FuelType);
                 r_DictionaryOfAllPatient[i_ChargingVehicleDetails.LicenceNumber].Vehicle.EnergySource.ChargeEnergySource(i_ChargingVehicleDetails);
 
                 throw valueOutOfRangeException;

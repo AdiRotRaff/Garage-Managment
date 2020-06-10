@@ -31,9 +31,7 @@ namespace Ex03.GarageLogic
         private eDoorsAmount m_DoorsAmount;
         private eCarColor m_Color;
 
-        public Car(string i_LicenceNumber, string i_ModelName, EnergySource.eTypeOfEnergySource i_EnergySourceType,
-            string i_WheelManufactorName)
-            : base(i_LicenceNumber, i_ModelName, i_EnergySourceType)
+        public Car(string i_LicenceNumber, string i_ModelName, EnergySource.eTypeOfEnergySource i_EnergySourceType, string i_WheelManufactorName) : base(i_LicenceNumber, i_ModelName, i_EnergySourceType)
         {
             for (int i = 0; i < sr_CarAmountOfWheels; i++)
             {
@@ -72,8 +70,7 @@ namespace Ex03.GarageLogic
 
         public override string ToString()
         {
-            return String.Format(@"{0}Car Amount Of Doors: {1}
-Car Color: {2}", VehicleDetails(), m_DoorsAmount, m_Color);
+            return string.Format(@"{0}Car Amount Of Doors: {1}{3}Car Color: {2}{3}", VehicleDetails(), m_DoorsAmount, m_Color, Environment.NewLine);
         }
 
         public override void FillRestDetails(object i_DatailsOne, object i_DetailsTwo)
@@ -83,4 +80,3 @@ Car Color: {2}", VehicleDetails(), m_DoorsAmount, m_Color);
         }
     }
 }
-

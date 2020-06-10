@@ -13,8 +13,8 @@ namespace Ex03.GarageLogic
             Car,
             Truck,
         }
-        public static Vehicle CreateVehicles(out bool v_VehicleIsValid, string i_LicenceNumber, string i_ModelName,
-            EnergySource.eTypeOfEnergySource i_Source, string i_WheelManuFactorName, eSupportedVehicle i_typeOfVehicleToInsert)
+
+        public static Vehicle CreateVehicles(out bool v_VehicleIsValid, string i_LicenceNumber, string i_ModelName, EnergySource.eTypeOfEnergySource i_Source, string i_WheelManuFactorName, eSupportedVehicle i_typeOfVehicleToInsert)
         {
             Vehicle newVehicle;
 
@@ -32,7 +32,7 @@ namespace Ex03.GarageLogic
             }
             else
             {
-                throw new ArgumentException(String.Format("Vehicle Manufacture doesn't support this ({0}) kind of vehicle yet", i_typeOfVehicleToInsert));
+                throw new ArgumentException(string.Format("Vehicle Manufacture doesn't support this ({0}) kind of vehicle yet", i_typeOfVehicleToInsert));
             }
 
             v_VehicleIsValid = true;

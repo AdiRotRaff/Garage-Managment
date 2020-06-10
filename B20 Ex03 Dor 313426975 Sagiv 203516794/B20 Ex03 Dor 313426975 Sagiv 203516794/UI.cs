@@ -130,8 +130,13 @@ namespace B20_Ex03_Dor_313426975_Sagiv_203516794
             {
                 userInput = Console.ReadLine();
                 Console.Write(Environment.NewLine);
+
+                if (string.IsNullOrEmpty(userInput) == true)
+                {
+                    Console.WriteLine("Input Is Null Or Empty TRY AGAIN");
+                }
             }
-            while (string.IsNullOrEmpty(userInput));
+            while (string.IsNullOrEmpty(userInput) == true);
 
             return userInput;
         }
@@ -149,6 +154,11 @@ namespace B20_Ex03_Dor_313426975_Sagiv_203516794
                 userInput = Console.ReadLine();
                 Console.Write(Environment.NewLine);
                 v_ValidInput = float.TryParse(userInput, out userFloatChoice);
+
+                if (v_ValidInput == false)
+                {
+                    PrintInvalidErrorWithSpecificError("Enter a Number");
+                }
             }
             while (v_ValidInput == false);
 

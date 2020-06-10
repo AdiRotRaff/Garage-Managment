@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Ex03.GarageLogic;
 
 namespace B20_Ex03_Dor_313426975_Sagiv_203516794
@@ -97,6 +96,7 @@ namespace B20_Ex03_Dor_313426975_Sagiv_203516794
 
             if (v_VehicleExist == false)
             {
+
                 Garage.EnterVehicleToGarage(currRegistrationForm);
                 m_Ui.PrintNatural("Car Was Inserted");
             }
@@ -176,6 +176,7 @@ namespace B20_Ex03_Dor_313426975_Sagiv_203516794
             modelName = m_Ui.GetStringWIthoutConditionFromUser("Model Name");
             wheelManufactor = m_Ui.GetStringWIthoutConditionFromUser("Wheel Manufacture Name");
             registedVehicle = MakeVehicle(licenceNumber, modelName, wheelManufactor);
+            insertRestVehicleDetails(registedVehicle);
 
             return registedVehicle;
         }
@@ -210,6 +211,118 @@ namespace B20_Ex03_Dor_313426975_Sagiv_203516794
             } while (v_VehicleIsValid == false);
 
             return newVehicle;
+        }
+
+        private void insertRestVehicleDetails(Vehicle i_NewVehicle)
+        {
+            m_Ui.PrintSignToUser("Insert Current Situation Of Your Vehicle");
+
+            insertCurrrentAirPressureOfWheels(i_NewVehicle);
+            insertAmountOfEnergyToAdd(i_NewVehicle);
+
+            if (i_NewVehicle is Motorcycle)
+            {
+                Motorcycle.eCategoryOfmotocycleLicence categoryOfMotocycleLicence = new Motorcycle.eCategoryOfmotocycleLicence();
+                int engineCapacity;
+
+                categoryOfMotocycleLicence = (Motorcycle.eCategoryOfmotocycleLicence)m_Ui.PrintAllEnumValuesGetUserChoice(categoryOfMotocycleLicence, "Motocycle License Category");
+                m_Ui.PrintSignToUser("Engine Capacity");
+                engineCapacity = (int)m_Ui.getFloatWithoutAnyCondition("Engine Capacity");
+
+                i_NewVehicle.FillRestDetails(categoryOfMotocycleLicence, engineCapacity);
+            }
+
+            else if (i_NewVehicle is Car)
+            {
+                Car.eDoorsAmount doorsAmount = new Car.eDoorsAmount();
+                Car.eCarColor color = new Car.eCarColor();
+
+                doorsAmount = (Car.eDoorsAmount)m_Ui.PrintAllEnumValuesGetUserChoice(doorsAmount, "Amount Of Doors");
+                color = (Car.eCarColor)m_Ui.PrintAllEnumValuesGetUserChoice(color, "Amount Of Doors");
+
+                i_NewVehicle.FillRestDetails(doorsAmount, color);
+            }
+            else
+            {
+                bool v_ContainHazerMaterial;
+                float cargoVolume;
+
+                m_Ui.PrintSignToUser("Cargo Volume");
+                cargoVolume = m_Ui.getFloatWithoutAnyCondition("Cargo Volume");
+                int userChoice;
+
+                m_Ui.PrintSignToUser("Contain Hazer Material IMPORTANT");
+                do
+                {
+                    userChoice =
+                        ((int)m_Ui.getFloatWithoutAnyCondition(
+                            "Hazer Material (1 if Your Truck Contains Hazer Material And 0 if Not)"));
+
+                    if (userChoice != 0 && userChoice != 1)
+                    {
+                        m_Ui.PrintInvalidErrorWithSpecificError("Enter An Int Number 1 Or 0");
+                    }
+                } while (userChoice != 0 && userChoice != 1);
+
+                v_ContainHazerMaterial = userChoice == 1;
+
+                i_NewVehicle.FillRestDetails(v_ContainHazerMaterial,cargoVolume);
+            }
+        }
+
+        private void insertCurrrentAirPressureOfWheels(Vehicle i_NewVehicle)
+        {
+            bool isValid = true;
+            float airPressureToAdd;
+
+            do
+            {
+                airPressureToAdd = m_Ui.getFloatWithoutAnyCondition("Current Wheel Air Pressure");
+                try
+                {
+                    foreach (Wheel currentWheel in i_NewVehicle.CollectionOfWheels)
+                    {
+                        currentWheel.CurrAirPressure = airPressureToAdd;
+                    }
+
+                    isValid = true;
+                }
+                catch (ValueOutOfRangeException)
+                {
+                    m_Ui.PrintNatural(string.Format(
+                        @"Air perssure isn't in correct range,
+now the pressure is {0} and at most for this vehcile is {1}",
+                        i_NewVehicle.CollectionOfWheels[0].CurrAirPressure,
+                        i_NewVehicle.CollectionOfWheels[0].MaxAirPressure));
+                    isValid = false;
+                }
+            }
+            while (!isValid);
+        }
+
+        private void insertAmountOfEnergyToAdd(Vehicle i_NewVehicle)
+        {
+            float AmountOfEnergyToEnter;
+            bool isValidInput;
+
+            do
+            {
+                try
+                {
+                    AmountOfEnergyToEnter = m_Ui.getFloatWithoutAnyCondition("Current Energy Source Quantity");
+                    i_NewVehicle.EnergySource.QuantityOfEnergyLeft = AmountOfEnergyToEnter;
+                    i_NewVehicle.UpdateEnergyPercent();
+                    isValidInput = true;
+                }
+                catch (ValueOutOfRangeException rangeException)
+                {
+                    m_Ui.PrintNatural(string.Format(@"
+please enter the amount to add again"));
+                    m_Ui.PrintNatural(rangeException.Message);
+                    isValidInput = false;
+                }
+            }
+            while (isValidInput == false);
         }
 
         private void displayDriverLicenceNumberWithFilterByStatusOfFix()

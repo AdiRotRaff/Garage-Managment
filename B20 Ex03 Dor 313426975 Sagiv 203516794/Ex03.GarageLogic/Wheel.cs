@@ -8,7 +8,7 @@
     }
 
     // check if struct
-    public struct Wheel
+    public class Wheel
     {
         private readonly string  r_ManufactorName;
         private float            m_MaxAirPressure;

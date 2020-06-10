@@ -7,7 +7,6 @@
         Truck = 28,
     }
 
-    // check if struct
     public class Wheel
     {
         private readonly string  r_ManufactorName;
@@ -17,7 +16,7 @@
         public Wheel(string i_ManufactorName, float i_MaxAirPressure)
         {
             this.r_ManufactorName = i_ManufactorName;
-            this.m_MaxAirPressure = i_MaxAirPressure; 
+            this.m_MaxAirPressure = i_MaxAirPressure;
             this.m_CurrAirPressure = 0;
         }
 
@@ -60,7 +59,8 @@
             string result;
 
             result = string.Format(
-                @"Air pressure: {0}
+                @"
+Air pressure: {0}
 Manufacturer: {1}",this.CurrAirPressure,this.ManufactorName);
 
             return result;

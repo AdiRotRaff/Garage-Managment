@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using System.Text;
 using Ex03.GarageLogic;
 
-namespace B20_Ex03_Dor_313426975_Sagiv_203516794
+namespace Ex03.ConsoleUI
 {
     public class UI
     {
@@ -14,8 +13,9 @@ namespace B20_Ex03_Dor_313426975_Sagiv_203516794
         public enum eDisplayOption
         {
             AllVehicles = 0,
-            SpecificStatus,
+            SpecificStatus
         }
+
         public enum eUserChoice
         {
             InsertNewCar = 0,
@@ -30,7 +30,6 @@ namespace B20_Ex03_Dor_313426975_Sagiv_203516794
         public int PrintAllEnumValuesGetUserChoice<T>(T i_UserChoice, string i_MsgInSign)
         {
             int userChoice;
-
 
             printSign(string.Format("{0}", i_MsgInSign));
             userChoice = printEnumOptionsAndGetEnumChoiceFromUser(typeof(T));
@@ -108,9 +107,8 @@ namespace B20_Ex03_Dor_313426975_Sagiv_203516794
                     v_validInput = false;
                     Console.WriteLine("Input Is Invalid Try Again (pay attention you asked to enter a number)");
                 }
-
-
-            } while (v_validInput == false);
+            }
+            while (v_validInput == false);
 
             return numberEnteredByUser;
         }
@@ -124,7 +122,7 @@ namespace B20_Ex03_Dor_313426975_Sagiv_203516794
         {
             string userInput;
 
-            Console.Write(String.Format("Please Enter Your {0}: ", i_DetailToGet));
+            Console.Write(string.Format("Please Enter Your {0}: ", i_DetailToGet));
 
             do
             {
@@ -147,7 +145,7 @@ namespace B20_Ex03_Dor_313426975_Sagiv_203516794
             float userFloatChoice;
             bool v_ValidInput;
 
-            Console.Write(String.Format("Please Enter Your {0}: ", i_DetailToGet));
+            Console.Write(string.Format("Please Enter Your {0}: ", i_DetailToGet));
 
             do
             {
@@ -175,39 +173,51 @@ namespace B20_Ex03_Dor_313426975_Sagiv_203516794
                 }
             }
         }
-        public string GetVehicleLicenseNumberCheckForExisiting(GarageManagment i_Garage)
-        {
-            string licenseNumber;
 
-            licenseNumber = GetStringWIthoutConditionFromUser("license Number");
+        public bool GetVehicleLicenseNumberCheckForExisiting(GarageManagment i_Garage, out string io_licenseNumber)
+        {
+            bool v_FoundVehicle = false;
+
+            io_licenseNumber = GetStringWIthoutConditionFromUser("license Number");
 
             try
             {
-                i_Garage.IsVehicleExists(licenseNumber);
+                i_Garage.IsVehicleExists(io_licenseNumber);
             }
             catch (ArgumentException ae)
             {
+                v_FoundVehicle = true;
                 Console.WriteLine(ae.Message);
             }
 
-            return licenseNumber;
+            return v_FoundVehicle;
         }
-        public ChargingVehicleDetails fillChargingVehicleForm(GarageManagment io_Garage)
+
+        public ChargingVehicleDetails FillChargingVehicleForm(GarageManagment io_Garage)
         {
             string licenseNumber;
             float quantityToAdd;
             EnergySource.eTypeOfEnergySource typeOfEnergyChoice = new EnergySource.eTypeOfEnergySource();
             Fuel.eFuelType? typeOfFuelChoice = new Fuel.eFuelType();
+            bool v_VehicleFound;
 
             printSign("filling Charging Form");
 
-            licenseNumber = GetVehicleLicenseNumberCheckForExisiting(io_Garage);
+            do
+            {
+                v_VehicleFound = GetVehicleLicenseNumberCheckForExisiting(io_Garage, out licenseNumber);
+                if (v_VehicleFound == false)
+                {
+                    Console.WriteLine("Vehicle Wasn't Found Try Again");
+                }
+            }
+            while (v_VehicleFound == false);
             quantityToAdd = getFloatWithoutAnyCondition("Quantity To Add");
-            typeOfEnergyChoice = (EnergySource.eTypeOfEnergySource)PrintAllEnumValuesGetUserChoice(typeOfEnergyChoice, "Fuel Type Choosing"); ;
+            typeOfEnergyChoice = (EnergySource.eTypeOfEnergySource)PrintAllEnumValuesGetUserChoice(typeOfEnergyChoice, "Fuel Type Choosing");
 
             if (typeOfEnergyChoice == EnergySource.eTypeOfEnergySource.Fuel)
             {
-                typeOfFuelChoice = (Fuel.eFuelType)PrintAllEnumValuesGetUserChoice(typeOfFuelChoice.Value,"Fuel Type Choosing");
+                typeOfFuelChoice = (Fuel.eFuelType)PrintAllEnumValuesGetUserChoice(typeOfFuelChoice.Value, "Fuel Type Choosing");
             }
             else
             {
@@ -239,7 +249,7 @@ namespace B20_Ex03_Dor_313426975_Sagiv_203516794
 
         public void PrintInvalidErrorWithSpecificError(string i_ErrorMsg)
         {
-            Console.WriteLine(String.Format("Invalid Input Of Choice Try Again ({0})", i_ErrorMsg));
+            Console.WriteLine(string.Format("Invalid Input Of Choice Try Again ({0})", i_ErrorMsg));
         }
 
         public void PrintNatural(string i_Msg)

@@ -1,7 +1,7 @@
 ﻿using System;
 using Ex03.GarageLogic;
 
-namespace B20_Ex03_Dor_313426975_Sagiv_203516794
+namespace Ex03.ConsoleUI
 {
     public class SystemManager
     {
@@ -74,7 +74,10 @@ namespace B20_Ex03_Dor_313426975_Sagiv_203516794
                 {
                     m_Ui.PrintInvalidErrorWithSpecificError("You need to choose an integer");
                 }
-            } while (v_closeGarage == false);
+            }
+            while (v_closeGarage == false);
+
+            m_Ui.PrintSignToUser("Goodbye Brian O'Conner and Turto's garage It Was A good Time");
         }
 
         private void insertNewCar()
@@ -89,14 +92,13 @@ namespace B20_Ex03_Dor_313426975_Sagiv_203516794
             }
             catch (ArgumentException ae)
             {
+                //// existing license number exist
                 v_VehicleExist = true;
-                // existing license number exist
                 m_Ui.PrintNatural(ae.Message);
             }
 
             if (v_VehicleExist == false)
             {
-
                 Garage.EnterVehicleToGarage(currRegistrationForm);
                 m_Ui.PrintNatural("Car Was Inserted");
             }
@@ -119,7 +121,7 @@ namespace B20_Ex03_Dor_313426975_Sagiv_203516794
                 throw ae;
             }
 
-            m_Ui.PrintSignToUser(String.Format("Contact Information"));
+            m_Ui.PrintSignToUser(string.Format("Contact Information"));
             ClientName = m_Ui.GetStringWIthoutConditionFromUser("Name");
 
             newreRegistrationForm = new VehicleRegistrationForm(newVehicle, ClientName);
@@ -139,7 +141,6 @@ namespace B20_Ex03_Dor_313426975_Sagiv_203516794
 
                 try
                 {
-
                     ClientPhoneNumber = m_Ui.GetStringWIthoutConditionFromUser("Phone Number");
                     i_NewreRegistrationForm.PhoneNumber = ClientPhoneNumber;
                 }
@@ -148,7 +149,8 @@ namespace B20_Ex03_Dor_313426975_Sagiv_203516794
                     m_Ui.PrintNatural(vore.Message);
                     v_ValidRegistrationForm = false;
                 }
-            } while (v_ValidRegistrationForm == false);
+            }
+            while (v_ValidRegistrationForm == false);
         }
 
         private Vehicle registNewCar()
@@ -160,8 +162,7 @@ namespace B20_Ex03_Dor_313426975_Sagiv_203516794
 
             m_Ui.PrintSignToUser("Create Vehicle");
 
-            licenceNumber = m_Ui.GetVehicleLicenseNumberCheckForExisiting(Garage);
-
+            m_Ui.GetVehicleLicenseNumberCheckForExisiting(Garage, out licenceNumber);
             try
             {
                 r_Garage.IsVehicleExists(licenceNumber);
@@ -169,8 +170,8 @@ namespace B20_Ex03_Dor_313426975_Sagiv_203516794
             catch(ArgumentException ae)
             {
                 r_Garage.ChangeStatus(licenceNumber, VehicleRegistrationForm.eStatusOfFix.InProgress);
-                // for good kriot (for those who will see insert new car method)
-                throw new ArgumentException(String.Format("{0} Status Changed To In Progress", licenceNumber));
+                //// for good kriot (for those who will see insert new car method)
+                throw new ArgumentException(string.Format("{0} Status Changed To In Progress", licenceNumber));
             }
 
             modelName = m_Ui.GetStringWIthoutConditionFromUser("Model Name");
@@ -192,23 +193,18 @@ namespace B20_Ex03_Dor_313426975_Sagiv_203516794
             {
                 try
                 {
-                    typeOfVehicleToInsert =
-                        (VehicleManufactur.eSupportedVehicle) m_Ui.PrintAllEnumValuesGetUserChoice(
-                            typeOfVehicleToInsert, "Vehicle Choosing");
-                    typeOfEnergySource =
-                        (EnergySource.eTypeOfEnergySource) m_Ui.PrintAllEnumValuesGetUserChoice(typeOfEnergySource,
-                            "Energy Source Choosing");
-
-                    newVehicle = VehicleManufactur.CreateVehicles(out v_VehicleIsValid, i_LicenceNumber, i_ModelName,
-                        typeOfEnergySource, i_WheelManufactor, typeOfVehicleToInsert);
+                    typeOfVehicleToInsert = (VehicleManufactur.eSupportedVehicle) m_Ui.PrintAllEnumValuesGetUserChoice(typeOfVehicleToInsert, "Vehicle Choosing");
+                    typeOfEnergySource = (EnergySource.eTypeOfEnergySource) m_Ui.PrintAllEnumValuesGetUserChoice(typeOfEnergySource, "Energy Source Choosing");
+                    newVehicle = VehicleManufactur.CreateVehicles(out v_VehicleIsValid, i_LicenceNumber, i_ModelName, typeOfEnergySource, i_WheelManufactor, typeOfVehicleToInsert);
                 }
                 catch (ArgumentException ae)
                 {
-                    // (RIGHT NOW) possible ArgumentException for inserting unsupported Vehicle or insert electric truck (not supported)
+                    //// (RIGHT NOW) possible ArgumentException for inserting unsupported Vehicle or insert electric truck (not supported)
                     v_VehicleIsValid = false;
                     m_Ui.PrintNatural(ae.Message);
                 }
-            } while (v_VehicleIsValid == false);
+            }
+            while (v_VehicleIsValid == false);
 
             return newVehicle;
         }
@@ -216,7 +212,6 @@ namespace B20_Ex03_Dor_313426975_Sagiv_203516794
         private void insertRestVehicleDetails(Vehicle i_NewVehicle)
         {
             m_Ui.PrintSignToUser("Insert Current Situation Of Your Vehicle");
-
             insertCurrrentAirPressureOfWheels(i_NewVehicle);
             insertAmountOfEnergyToAdd(i_NewVehicle);
 
@@ -231,14 +226,13 @@ namespace B20_Ex03_Dor_313426975_Sagiv_203516794
 
                 i_NewVehicle.FillRestDetails(categoryOfMotocycleLicence, engineCapacity);
             }
-
             else if (i_NewVehicle is Car)
             {
                 Car.eDoorsAmount doorsAmount = new Car.eDoorsAmount();
                 Car.eCarColor color = new Car.eCarColor();
 
                 doorsAmount = (Car.eDoorsAmount)m_Ui.PrintAllEnumValuesGetUserChoice(doorsAmount, "Amount Of Doors");
-                color = (Car.eCarColor)m_Ui.PrintAllEnumValuesGetUserChoice(color, "Amount Of Doors");
+                color = (Car.eCarColor)m_Ui.PrintAllEnumValuesGetUserChoice(color, "Car Color");
 
                 i_NewVehicle.FillRestDetails(doorsAmount, color);
             }
@@ -254,19 +248,16 @@ namespace B20_Ex03_Dor_313426975_Sagiv_203516794
                 m_Ui.PrintSignToUser("Contain Hazer Material IMPORTANT");
                 do
                 {
-                    userChoice =
-                        ((int)m_Ui.getFloatWithoutAnyCondition(
-                            "Hazer Material (1 if Your Truck Contains Hazer Material And 0 if Not)"));
+                    userChoice = (int)m_Ui.getFloatWithoutAnyCondition("Hazer Material (1 if Your Truck Contains Hazer Material And 0 if Not)");
 
                     if (userChoice != 0 && userChoice != 1)
                     {
                         m_Ui.PrintInvalidErrorWithSpecificError("Enter An Int Number 1 Or 0");
                     }
-                } while (userChoice != 0 && userChoice != 1);
-
+                }
+                while (userChoice != 0 && userChoice != 1);
                 v_ContainHazerMaterial = userChoice == 1;
-
-                i_NewVehicle.FillRestDetails(v_ContainHazerMaterial,cargoVolume);
+                i_NewVehicle.FillRestDetails(v_ContainHazerMaterial, cargoVolume);
             }
         }
 
@@ -341,8 +332,7 @@ please enter the amount to add again"));
             else
             {
                 statusChoice =
-                    (VehicleRegistrationForm.eStatusOfFix) m_Ui.PrintAllEnumValuesGetUserChoice(statusChoice,
-                        "Status Of Fix Choosing");
+                    (VehicleRegistrationForm.eStatusOfFix) m_Ui.PrintAllEnumValuesGetUserChoice(statusChoice, "Status Of Fix Choosing");
             }
 
             m_Ui.PrintLicensePlatesWithStatusFilterIfNeeded(statusChoice, r_Garage.DictionaryOfAllPatient, displayAll);
@@ -352,16 +342,22 @@ please enter the amount to add again"));
         {
             string licenseNumber;
             VehicleRegistrationForm.eStatusOfFix statusToChangeToChoice = new VehicleRegistrationForm.eStatusOfFix();
+            bool v_VehicleFound;
 
+            m_Ui.PrintSignToUser("Change Status Of Fix By License Number");
 
-            m_Ui.PrintSignToUser("Change Status Of Fix By Licence Number");
-
-
-            licenseNumber = m_Ui.GetVehicleLicenseNumberCheckForExisiting(Garage);
+            do
+            {
+                v_VehicleFound = m_Ui.GetVehicleLicenseNumberCheckForExisiting(Garage, out licenseNumber);
+                if (v_VehicleFound == false)
+                {
+                    Console.WriteLine("Vehicle Wasn't Found Try Again");
+                }
+            }
+            while (v_VehicleFound == false);
 
             statusToChangeToChoice =
-                (VehicleRegistrationForm.eStatusOfFix) m_Ui.PrintAllEnumValuesGetUserChoice(statusToChangeToChoice,
-                    "Status Of Fix Choosing");
+                (VehicleRegistrationForm.eStatusOfFix) m_Ui.PrintAllEnumValuesGetUserChoice(statusToChangeToChoice, "Status Of Fix Choosing");
 
             try
             {
@@ -379,9 +375,20 @@ please enter the amount to add again"));
         private void blowWheelsToMax()
         {
             string licenseNumber;
+            bool v_VehicleFound;
 
             m_Ui.PrintSignToUser("Blowing Wheels");
-            licenseNumber = m_Ui.GetVehicleLicenseNumberCheckForExisiting(r_Garage);
+
+            do
+            {
+                v_VehicleFound = m_Ui.GetVehicleLicenseNumberCheckForExisiting(Garage, out licenseNumber);
+                if (v_VehicleFound == false)
+                {
+                    Console.WriteLine("Vehicle Wasn't Found Try Again");
+                }
+            }
+            while (v_VehicleFound == false);
+
             r_Garage.BlowToMaximunWheelAirPrresure(licenseNumber);
             m_Ui.PrintNatural("All Wheels were Blown To Max");
         }
@@ -399,7 +406,7 @@ please enter the amount to add again"));
 
                 try
                 {
-                    chargingForm = m_Ui.fillChargingVehicleForm(r_Garage);
+                    chargingForm = m_Ui.FillChargingVehicleForm(Garage);
                     r_Garage.ChargeEnergySource(chargingForm);
                 }
                 catch (ValueOutOfRangeException rangeException)
@@ -414,8 +421,8 @@ please enter the amount to add again"));
                     m_Ui.PrintNatural("Fill Charging Form Again");
                     v_ChargedVehicle = false;
                 }
-
-            } while (v_ChargedVehicle == false);
+            }
+            while (v_ChargedVehicle == false);
 
             m_Ui.PrintNatural("Vehicle Charged!!");
         }
@@ -423,9 +430,20 @@ please enter the amount to add again"));
         private void displayFullVehicleDataByLicenseNumber()
         {
             string licenseNumber;
+            bool v_VehicleFound;
 
             m_Ui.PrintSignToUser("Display Full Client Data");
-            licenseNumber = m_Ui.GetVehicleLicenseNumberCheckForExisiting(r_Garage);
+
+            do
+            {
+                v_VehicleFound = m_Ui.GetVehicleLicenseNumberCheckForExisiting(Garage, out licenseNumber);
+                if (v_VehicleFound == false)
+                {
+                    Console.WriteLine("Vehicle Wasn't Found Try Again");
+                }
+            }
+            while (v_VehicleFound == false);
+
             m_Ui.PrintNatural(r_Garage.DictionaryOfAllPatient[licenseNumber].ToString());
         }
     }

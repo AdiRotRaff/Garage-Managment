@@ -69,7 +69,8 @@ namespace Ex03.GarageLogic
         }
         public override string ToString()
         {
-            return string.Format(@"Vehicle Fuel Left: {0}
+            return string.Format(@"
+Vehicle Fuel Left: {0}
 Vehicle Fuel Type: {1}
 vehicle Capacity Of Tank: {2}", QuantityOfEnergyLeft, m_FuelType, MaxOfEnergyCanContain);
         }

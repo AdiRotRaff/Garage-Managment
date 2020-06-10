@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace B20_Ex03_Dor_313426975_Sagiv_203516794
+namespace Ex03.ConsoleUI
 {
     public class Program
     {

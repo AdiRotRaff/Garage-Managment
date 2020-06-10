@@ -7,6 +7,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ex03.ConsoleUI", "B20 Ex03 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ex03.GarageLogic", "Ex03.GarageLogic\Ex03.GarageLogic.csproj", "{E2F991E9-1FDE-481B-90EE-E52A2C6E57E0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BE20C74C-0359-431A-94D7-DD3860782841}"
+	ProjectSection(SolutionItems) = preProject
+		Class Diagram + Explain (Dor 313426975 Sagiv 203516794).docx = Class Diagram + Explain (Dor 313426975 Sagiv 203516794).docx
+		Exersice Checking Report.txt = Exersice Checking Report.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

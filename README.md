@@ -1,26 +1,19 @@
 # GarageManagment
 
+# Goals:
+*Assimilation of work with departments, inheritance and polymorphism
+*Collections in use
+*Implementation enums
+*Development and use of external Dll (assembly)
+*Working with multiple projects
+*Working with Exceptions
 
-הטמעה של עבודה עם מחלקות, הורשה ופולימורפיזם
-Collections -ב שימוש
-מימוש enums פיתוח ושימוש ב- Dll (אסמבלי) חיצוני עבודה עם מספר פרויקטים עבודה עם Exceptions
- 
-מטרות
-•
-•
-•
-•
-•
-•
- 
-ידע נדרש
-•   תיכנות מונחה עצמים תוך שימוש בפולימורפיזם ב- C#
-Collections -ב שימוש	•
-•    פיתוח ושימוש ב- Dll (אסמבלי) חיצוני
-•    עבודה עם מספר פרויקטים
-Exceptions עם עבודה    •
-https://www.youtube.com/watch?v=AWuUMHhLLmU :הדרכה לסירטון קישור
-(הצפייה היא חובה. מומלץ לראות לפני הסירטון השני)
-Object -מ הירושה    •
-https://www.youtube.com/watch?v=bScwvq5-ovg :הדרכה לסירטון קישור
-(הצפייה היא חובה. מומלץ לראות אחרי הסירטון הראשון)
+
+# Knowledge required:
+*Object-Oriented Programming Using C # Polymorphism
+*Collections in use
+*Development and use of external Dll (Assembly)
+*Working with several projects
+*Work with Exceptions
+*inheritance From Object
+

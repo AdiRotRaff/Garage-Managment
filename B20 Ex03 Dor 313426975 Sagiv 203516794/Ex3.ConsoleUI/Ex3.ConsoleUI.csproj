@@ -4,12 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CCF31C75-B09C-4A45-8327-6C7A0ACB97E7}</ProjectGuid>
+    <ProjectGuid>{FCC6E4CA-A7DD-41FC-B875-1F86CFD3229A}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>B20_Ex03_Dor_313426975_Sagiv_203516794</RootNamespace>
-    <AssemblyName>B20 Ex03 Dor 313426975 Sagiv 203516794</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <RootNamespace>Ex3.ConsoleUI</RootNamespace>
+    <AssemblyName>Ex3.ConsoleUI</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -32,9 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
-    <Compile Include="SystemManager.cs" />
-    <Compile Include="UI.cs" />
+    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Ex03.GarageLogic">
@@ -42,7 +41,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
+    <Compile Include="Program.cs" />
+    <Compile Include="SystemManager.cs" />
+    <Compile Include="UI.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

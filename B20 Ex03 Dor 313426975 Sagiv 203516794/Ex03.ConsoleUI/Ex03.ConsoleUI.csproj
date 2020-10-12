@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FCC6E4CA-A7DD-41FC-B875-1F86CFD3229A}</ProjectGuid>
+    <ProjectGuid>{06DC416F-466D-49CD-888C-E15CB5A269A3}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Ex3.ConsoleUI</RootNamespace>
-    <AssemblyName>Ex3.ConsoleUI</AssemblyName>
+    <RootNamespace>Ex03.ConsoleUI</RootNamespace>
+    <AssemblyName>Ex03.ConsoleUI</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

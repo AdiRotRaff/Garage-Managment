@@ -1,14 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30011.22
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ex03.GarageLogic", "Ex03.GarageLogic\Ex03.GarageLogic.csproj", "{E2F991E9-1FDE-481B-90EE-E52A2C6E57E0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BE20C74C-0359-431A-94D7-DD3860782841}"
 	ProjectSection(SolutionItems) = preProject
-		Class Diagram + Explain (Dor 313426975 Sagiv 203516794).docx = Class Diagram + Explain (Dor 313426975 Sagiv 203516794).docx
 		Exersice Checking Report.txt = Exersice Checking Report.txt
+		Class Diagram + Explain.docx = Class Diagram + Explain.docx
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ex03.ConsoleUI", "Ex03.ConsoleUI\Ex03.ConsoleUI.csproj", "{06DC416F-466D-49CD-888C-E15CB5A269A3}"

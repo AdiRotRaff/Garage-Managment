@@ -1,7 +1,6 @@
 =====================Exercise Checking Report========================
 Exercise No.........................: 3
-First Student Details........: 313426975 - Dor Lasri
-Second Student Details..: 203516794 - Sagiv Levy
+First Student Details........: Adi Rot Raff
 Delivery Date......................: 10 June 2020
 Delivery In Delay................: No
 Delivery Reason..................:

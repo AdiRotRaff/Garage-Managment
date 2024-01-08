@@ -1,7 +1,6 @@
 =====================Exercise Checking Report========================
 Exercise No.........................: 3
 First Student Details........: Adi Rot Raff
-Delivery Date......................: 10 June 2020
 Delivery In Delay................: No
 Delivery Reason..................:
 Visual Studio Version........: Visual Studio Enterprise 2017 16.5.4
